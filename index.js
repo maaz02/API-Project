@@ -89,6 +89,26 @@ bookman.get("/author", (req,res) => {
 });
 
 /*
+Route            /author/id
+Description      Get all authors based on id
+Access           PUBLIC
+Parameter        id
+Methods          GET
+*/
+
+bookman.get("/author/id/:id", (req,res) => {
+  const getSpecificAuthor = database.author.filter(
+    (author) => author.id.includes(req.params.id)
+  );
+
+  if (getSpecificAuthor.length === 0) {
+    return res.json({error: `No author found for the id of ${req.params.id}`});
+  }
+
+  return res.json({authors: getSpecificAuthor});
+});
+
+/*
 Route            /author/book
 Description      Get all authors based on books
 Access           PUBLIC
@@ -117,6 +137,44 @@ Methods          GET
 
 bookman.get("/publications",(req,res) => {
   return res.json({publications: database.publication});
+});
+
+/*
+Route            /publications
+Description      Get specific Publication by name
+Access           PUBLIC
+Parameter        name
+Methods          GET
+*/
+
+bookman.get("/publications/name/:name",(req,res) => {
+  const getSpecificPublication = database.publication.filter(
+    (publication) => publication.name.includes(req.params.name)
+  );
+
+  if(getSpecificPublication.length === 0){
+    return res.json({error: `No publication found for the book of ${req.params.name}`});
+  }
+  return res.json({publications: getSpecificPublication});
+});
+
+/*
+Route            /publication/book
+Description      Get all publications based on books
+Access           PUBLIC
+Parameter        books
+Methods          GET
+*/
+
+bookman.get("/publications/book/:books", (req,res) => {
+  const getSpecificPublication = database.publication.filter(
+    (publication) => publication.books.includes(req.params.books)
+  );
+
+  if(getSpecificPublication.length === 0){
+    return res.json({error: `No publication found for the book of ${req.params.books}`});
+  }
+  return res.json({publications: getSpecificPublication});
 });
 
 bookman.listen(3000,() => {
