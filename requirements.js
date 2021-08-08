@@ -31,3 +31,10 @@
 //To get all the publications - DONE
 //To get a specific publication - DONE
 //To get a list of publications based on a book. - DONE
+
+
+
+//POST REQUEST
+//1. ADD NEW BOOK - DONE
+//2. ADD NEW PUBLICATION - DONE
+//3. ADD NEW AUTHOR - DONE

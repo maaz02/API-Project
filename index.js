@@ -1,10 +1,13 @@
-const express = require("express")
-
+const express = require("express");
+var bodyParser = require("body-parser");
 //Database
 const database = require("./database");
 
 //Initialize express
 const bookman = express();
+
+bookman.use(bodyParser.urlencoded({extended: true}));
+bookman.use(bodyParser.json());
 
 /*
 Route            /
@@ -98,7 +101,7 @@ Methods          GET
 
 bookman.get("/author/id/:id", (req,res) => {
   const getSpecificAuthor = database.author.filter(
-    (author) => author.id.includes(req.params.id)
+    (author) => author.id === parseInt(req.params.id)
   );
 
   if (getSpecificAuthor.length === 0) {
@@ -175,6 +178,51 @@ bookman.get("/publications/book/:books", (req,res) => {
     return res.json({error: `No publication found for the book of ${req.params.books}`});
   }
   return res.json({publications: getSpecificPublication});
+});
+
+
+//POST
+
+/*
+Route            /book/new
+Description      Add new books
+Access           PUBLIC
+Parameter        NONE
+Methods          POST
+*/
+
+bookman.post("/book/new",(req,res) => {
+  const newBook = req.body;
+  database.books.push(newBook);
+  return res.json({updatedBooks: database.books});
+});
+
+/*
+Route            /author/new
+Description      Add new authors
+Access           PUBLIC
+Parameter        NONE
+Methods          POST
+*/
+
+bookman.post("/author/new",(req,res) => {
+  const newAuthor = req.body;
+  database.author.push(newAuthor);
+  return res.json(database.author);
+});
+
+/*
+Route            /publication/new
+Description      Add new publications
+Access           PUBLIC
+Parameter        NONE
+Methods          POST
+*/
+
+bookman.post("/publication/new",(req,res) => {
+  const newPublication = req.body;
+  database.publication.push(newPublication);
+  return res.json(database.publication);
 });
 
 bookman.listen(3000,() => {

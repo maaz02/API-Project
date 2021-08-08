@@ -13,12 +13,12 @@ const books = [
 
 const author = [
   {
-    id: "1",
+    id:1,
     name: "Maaz",
     books: ["12345Book", "secretBook"]
   },
   {
-    id: "2",
+    id:2,
     name: "Elon Musk",
     books: ["12345Book"]
   }
